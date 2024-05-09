@@ -2,7 +2,10 @@
   "name": "better-ajv-errors",
   "version": "0.6.7-graphext03",
   "description": "JSON Schema validation for Human",
-  "repository": "graphext/better-ajv-errors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/graphext/better-ajv-errors.git"
+  },
   "main": "dist/index.js",
   "keywords": [
     "json-schema",
