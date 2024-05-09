@@ -17,7 +17,7 @@ steps:
     image: node:20-alpine3.19
     commands:
       - echo -n $NPMRC | base64 -d > /root/.npmrc
-      - npm publish --dry-run
+      - npm publish
       - rm /root/.npmrc
     depends_on:
       - test
