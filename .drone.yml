@@ -1,0 +1,36 @@
+---
+kind: pipeline
+name: better-ajv-errors
+steps:
+  - name: build
+    image: node:20-alpine3.19
+    commands:
+      - yarn
+      - yarn build
+  - name: test
+    image: node:20-alpine3.19
+    commands:
+      - yarn test-ci
+    depends_on:
+      - build
+  - name: publish
+    image: node:20-alpine3.19
+    commands:
+      - echo -n $NPMRC | base64 -d > /root/.npmrc
+      - npm publish --dry-run
+      - rm /root/.npmrc
+    depends_on:
+      - test
+    environment:
+      NPMRC:
+        from_secret: NPMRC_GAR_CI
+    when:
+      branch:
+        - master
+      event:
+        exclude:
+          - pull_request
+
+---
+kind: signature
+hmac: 9f4e843dd2d3380ddae30ded15684da3c5a978a85a3ff6a796ddd59ff78fcedb
